@@ -1,0 +1,41 @@
+App\DTO\PriceTravelDTO:
+    properties:
+        originPrice:
+            - NotBlank:
+                message: Price could not be blank.
+            - PositiveOrZero:
+                message: Price should be positive or equal to 0.
+        birthdayDate:
+            - NotBlank:
+                message: Birthday date could not be blank.
+            - LessThan:
+                message: Birthday date should be less than {{ compared_value }}.
+                value: today
+        paymentDate:
+            - GreaterThanOrEqual:
+                message: Payment date should be greater than or equal to {{ compared_value }}.
+                value: today
+            - GreaterThan:
+                message: Payment date should be greater than {{ compared_value }}.
+                propertyPath: birthdayDate
+        startDate:
+            - NotBlank:
+                message: Start date could not be blank.
+            - GreaterThan:
+                message: Start date should be greater than {{ compared_value }}.
+                value: today
+            - GreaterThan:
+                message: Start date should be greater than {{ compared_value }}.
+                propertyPath: birthdayDate
+            - GreaterThan:
+                message: Start date should be greater than {{ compared_value }}.
+                propertyPath: paymentDate
+            - LessThan:
+                propertyPath: endDate
+                message: Start Date date should be greater than or equal to {{ compared_value }}.
+        endDate:
+            - NotBlank:
+                message: End date could not be blank.
+            - GreaterThan:
+                message: End date should be greater than or equal to {{ compared_value }}.
+                propertyPath: startDate
